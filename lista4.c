@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+#include <unistd.h>
 
 #define PRETO 0
 #define VERMELHO 1
@@ -36,7 +37,7 @@ int main() {
   int tipo; // tipo vermelho preto
   tree *arvore = NULL;
   tree *aux;
-  limparTela();
+  //limparTela();
   // carrega arvore
   arvore = lerArvoreDoArquivo(arvore, caminho, &tipo);
 

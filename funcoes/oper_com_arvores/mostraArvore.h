@@ -54,7 +54,6 @@ void mostraArvore(tree *arvore, int tipoDeArvore) {
   printf(" | Arvore %-30s|\n", (tipoDeArvore == TIPO_VP ? "vermelho/preto" : "AVL"));
   printf(" ========================================\n");
   if (arvore != NULL){
-    scanf("%c", &pausa);
     printaRecursivo(arvore, tipoDeArvore, posX/2, posX, posY);
     gotoxy(1,posX+h+5);
   } else {
