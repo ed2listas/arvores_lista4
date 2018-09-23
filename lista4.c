@@ -12,6 +12,14 @@
 #define TIPO_AVL 0
 #define TIPO_VP 1
 
+#define clear() printf("\033[H\033[J")
+#define gotoxy(x,y) printf("\033[%d;%dH", (y), (x))
+#define moveUp() printf("\033[XA")
+#define moveDown() printf("\033[XB")
+#define moveRight() printf("\033[XC")
+#define moveLeft() printf("\033[XD")
+//printf("\033[2J"); // Clear screen
+
 typedef struct TREE {
   int value;
   int color; // só usado se for arvore VP
@@ -23,23 +31,21 @@ typedef struct TREE {
 
 int main() {
   char lixo;
-  char caminho[] = "arquivo/arvore1.txt";
+  char caminho[] = "arquivo/arvorex.txt";
   int opcao,valor;
   int tipo; // tipo vermelho preto
   tree *arvore = NULL;
   tree *aux;
-
+  limparTela();
   // carrega arvore
   arvore = lerArvoreDoArquivo(arvore, caminho, &tipo);
 
   do {
     // mostra arvore
     mostraArvore(arvore, tipo);
-
     opcao = mostraMenu();
     //limparTela();
-    switch(opcao)
-    {
+    switch(opcao) {
       case 1: // inseri valor
         leValor(&valor);
         limparTela();

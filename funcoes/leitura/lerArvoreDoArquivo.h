@@ -21,7 +21,7 @@ tree* lerArvoreDoArquivo(tree *arvore,char *caminho, int *tipoDeArvore){
   printf(", %d para ", TIPO_AVL);
   printComCor("AVL", BRANCO);
   printf(")\n\n");
-  
+
 
   do {
     scanf("%d", tipoDeArvore);
@@ -36,7 +36,7 @@ tree* lerArvoreDoArquivo(tree *arvore,char *caminho, int *tipoDeArvore){
   }
   else {
     while((fscanf(p_arq,"%d", &valor)) != EOF) {
-       arvore = insereValor(arvore,valor, *tipoDeArvore);
+       arvore = insereValor(arvore, valor, *tipoDeArvore);
     }
     fclose(p_arq);
     return arvore;

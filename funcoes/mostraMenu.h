@@ -1,6 +1,6 @@
 int mostraMenu(){
     int opcao;
-    printf("\n");
+    //printf("\n");
     printf(" ========================================\n");
     printf("|         >>>>>>>>> Menu <<<<<<<<<       |\n");
     printf("| 1 - Inserir valor                      |\n");
