@@ -23,23 +23,35 @@
 
 typedef struct TREE {
   int value;
-  int color; // só usado se for arvore VP
+  int color; // 2 para alv, 0 ou 1 para preto/vermelho
+  int fator_bal;
+  struct TREE *father;
   struct TREE *left;
   struct TREE *right;
 }tree;
-
+/*
+typedef struct tree {
+  int value;
+  int fator_bal;
+  struct TREE *father;
+  struct TREE *left;
+  struct TREE *right;
+}tree;
+*/
 #include "funcoes/_todas.h"
 
 int main() {
   char lixo;
   char caminho[] = "arquivo/arvorex.txt";
   int opcao,valor;
-  int tipo; // tipo vermelho preto
+  int tipo = TIPO_AVL; // tipo vermelho preto
   tree *arvore = NULL;
   tree *aux;
   //limparTela();
+
   // carrega arvore
-  arvore = lerArvoreDoArquivo(arvore, caminho, &tipo);
+  //arvore = lerArvoreDoArquivo(arvore, caminho, &tipo);
+  arvore = insereValor(arvore, 5, tipo);
 
   do {
     // mostra arvore
@@ -56,12 +68,12 @@ int main() {
       case 2: // remover valor
         leValor(&valor);
         limparTela();
-        arvore = removeValue(arvore, valor, tipo);
+        arvore = removeValue(arvore, valor);
         // apos remover, fazer balanceamento e outras coisas
         break;
       case 3: // carregar arvore
         arvore = freeArvore(arvore);
-        arvore = lerArvoreDoArquivo(arvore, caminho, &tipo);
+        //arvore = lerArvoreDoArquivo(arvore, caminho, &tipo);
         break;
       case 0: // sair
         arvore = freeArvore(arvore);

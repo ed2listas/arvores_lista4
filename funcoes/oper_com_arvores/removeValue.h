@@ -1,5 +1,6 @@
 
-tree * removeValue(tree * arvore, int valor, int tipoDeArvore) {
+tree * removeValue(tree * arvore, int valor) {
+
   tree *aux = arvore;
   tree *ant;
   tree *folha,*antFolha;
@@ -70,7 +71,7 @@ tree * removeValue(tree * arvore, int valor, int tipoDeArvore) {
       folha = folha->left;
     }
     temp = folha->value;
-    arvore = removeValue(arvore, folha->value, tipoDeArvore);
+    arvore = removeValue(arvore, folha->value);
     aux->value = temp;
     //printf("removido do meio\n");
     //pausar();

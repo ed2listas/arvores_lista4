@@ -8,8 +8,8 @@ void debug(char *msg, int a, int x, int y) {
   gotoxy(x, y);
 }
 
-void printaValor(int valor, int cor, int tipoDeArvore) {
-  if (tipoDeArvore == TIPO_VP) {
+void printaValor(int valor, int cor, int tipo) {
+  if (tipo == TIPO_VP) {
     if (cor == VERMELHO)
       background(RED);
     else
@@ -46,15 +46,15 @@ void printaRecursivo(tree *no, int tipo, int sizeLine, int posX, int posY) {
   }
 }
 
-void mostraArvore(tree *arvore, int tipoDeArvore) {
+void mostraArvore(tree *arvore, int tipo) {
   int h = getHeight(arvore)-1, pausa;
   int posX = 2*pow(2, h), posY = 5;
 
   printf(" ========================================\n");
-  printf(" | Arvore %-30s|\n", (tipoDeArvore == TIPO_VP ? "vermelho/preto" : "AVL"));
+  printf(" | Arvore %-30s|\n", (tipo == TIPO_VP ? "vermelho/preto" : "AVL"));
   printf(" ========================================\n");
   if (arvore != NULL){
-    printaRecursivo(arvore, tipoDeArvore, posX/2, posX, posY);
+    printaRecursivo(arvore, tipo, posX/2, posX, posY);
     gotoxy(1,posX+h+5);
   } else {
     printf("Sem arvore carregada\n");
