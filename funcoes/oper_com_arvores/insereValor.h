@@ -37,16 +37,16 @@ void insere_avl(arvore_avl *raiz, int valor){
         raiz = (arvore_avl*) malloc(sizeof(arvore_avl));
 
         if(!raiz){
-            printf("Erro ao alocar =(\n");
+            printf("Erro");
             exit(1);
         }
 
         raiz->valor = valor;
-        raiz->esquerda = NULL;
-        raiz->direita = NULL;
+        raiz->esq = NULL;
+        raiz->dir = NULL;
         raiz->pai = NULL;
 
-        raiz->fb = 0;
+        raiz->fator_bal = 0;
     }
     else{
         aux1 = raiz;
@@ -55,20 +55,20 @@ void insere_avl(arvore_avl *raiz, int valor){
         while(aux2){
 
             if(valor < aux2->valor){
-                aux2 = aux2->esquerda;
+                aux2 = aux2->esq;
 
                 if(!aux2){
-                    aux1->esquerda = (arvore_avl*) malloc(sizeof(arvore_avl));
+                    aux1->esq = (arvore_avl*) malloc(sizeof(arvore_avl));
 
-                    if(!aux1->esquerda){
+                    if(!aux1->esq){
                         printf("Erro ao alocar =(\n");
                         exit(1);
                     }
 
-                    aux2 = aux1->esquerda;
+                    aux2 = aux1->esq;
 
-                    aux2->esquerda = NULL;
-                    aux2->direita = NULL;
+                    aux2->esq = NULL;
+                    aux2->dir = NULL;
                     aux2->pai = aux1;
                     aux2->valor = valor;
                     break;
@@ -79,20 +79,20 @@ void insere_avl(arvore_avl *raiz, int valor){
             }
 
             else{ //Para outro lado
-                aux2 = aux2->direita;
+                aux2 = aux2->dir;
 
                 if(!aux2){
-                    aux1->direita = (arvore_avl*) malloc(sizeof(arvore_avl));
+                    aux1->dir = (arvore_avl*) malloc(sizeof(arvore_avl));
 
-                    if(!aux1->direita){
+                    if(!aux1->dir){
                         printf("Erro ao alocar =(\n");
                         exit(1);
                     }
 
-                    aux2 = aux1->direita;
+                    aux2 = aux1->dir;
 
-                    aux2->esquerda = NULL;
-                    aux2->direita = NULL;
+                    aux2->esq = NULL;
+                    aux2->dir = NULL;
                     aux2->pai = aux1;
                     aux2->valor = valor;
                     break;
@@ -107,10 +107,10 @@ void insere_avl(arvore_avl *raiz, int valor){
 
     if(aux2){
         while(aux2){
-            aux2->fb = altura(aux2->direita) - altura(aux2->esquerda);
+            aux2->fator_bal = altura(aux2->dir) - altura(aux2->esq);
 
-            if(aux2->fb > 1 || aux2->fb < -1){
-                aux2 = balancear(raiz, aux2);
+            if(aux2->fator_bal > 1 || aux2->fator_bal < -1){
+                aux2 = balancear(raiz,aux2);
             }
 
             aux2 = aux2->pai;

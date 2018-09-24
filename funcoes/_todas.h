@@ -4,6 +4,7 @@
 #include "outros/tiraTerminador.h"
 #include "outros/limpaBuffer.h"
 
+#include "para_terminar/balanceTree.h"
 #include "oper_com_arvores/insereValor.h"
 
 #include "leitura/lerString.h"
@@ -20,4 +21,3 @@
 #include "oper_com_arvores/contaElementos.h"
 #include "oper_com_arvores/removeValue.h"
 #include "oper_com_arvores/verificaBalanceada.h"
-#include "para_terminar/balanceTree.h"

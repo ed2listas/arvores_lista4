@@ -29,10 +29,11 @@ typedef struct TREE {
 }tree;
 
 typedef struct arvore{
-    int valor, fb;  /* fb =  hDireita - hEsquerda */
-    struct arvore *esquerda;
-    struct arvore *direita;
+    int valor;
+    int fator_bal;
     struct arvore *pai;
+    struct arvore *esq;
+    struct arvore *dir;
 }arvore_avl;
 
 #include "funcoes/_todas.h"

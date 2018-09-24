@@ -66,15 +66,25 @@ tree *balanceTree(tree *arvore) {
    return arvore;
  }*/
 
+ int altura(arvore_avl* aux){
+     if(!aux){
+         return 0;
+     }
 
-arvore_avl* rot_direita(arvore_avl *raiz, arvore_avl *aux){
-    arvore_avl *esq = aux->esquerda;
+     int alturaesq = altura(aux->esq);
+     int alturadir = altura(aux->dir);
 
-    aux->esquerda = esq->direita;
-    esq->direita = aux;
+     return (alturaesq > alturadir) ? alturaesq+ 1: alturadir + 1;
+}
 
-    if(aux->esquerda){
-        aux->esquerda->pai = aux;
+arvore_avl* rot_dir(arvore_avl* raiz, arvore_avl *aux){
+    arvore_avl *esq = aux->esq;
+
+    aux->esq = esq->dir;
+    esq->dir = aux;
+
+    if(aux->esq){
+        aux->esq->pai = aux;
     }
 
     esq->pai = aux->pai;
@@ -86,27 +96,27 @@ arvore_avl* rot_direita(arvore_avl *raiz, arvore_avl *aux){
 
     if(esq->pai){
         if(esq->valor < esq->pai->valor){
-            esq->pai->esquerda = esq;
+            esq->pai->esq = esq;
         }
         else{
-            esq->pai->direita = esq;
+            esq->pai->dir = esq;
         }
     }
 
-    esq->fb = altura(esq->direita) - altura(esq->esquerda);
-    aux->fb = altura(aux->direita) - altura(aux->esquerda);
+    esq->fator_bal = altura(esq->dir) - altura(esq->esq);
+    aux->fator_bal = altura(aux->dir) - altura(aux->esq);
 
     return esq;
 }
 
-arvore_avl* rot_esquerda(arvore_avl *raiz, arvore_avl *aux){
-    arvore_avl *dir = aux->direita;
+arvore_avl* rot_esq(arvore_avl* raiz,arvore_avl *aux){
+    arvore_avl *dir = aux->dir;
 
-    aux->direita = dir->esquerda;
-    dir->esquerda = aux;
+    aux->dir = dir->esq;
+    dir->esq = aux;
 
-    if(aux->direita){
-        aux->direita->pai = aux;
+    if(aux->dir){
+        aux->dir->pai = aux;
     }
 
     dir->pai = aux->pai;
@@ -118,45 +128,33 @@ arvore_avl* rot_esquerda(arvore_avl *raiz, arvore_avl *aux){
 
     if(dir->pai){
         if(dir->valor < dir->pai->valor){
-            dir->pai->esquerda = dir;
+            dir->pai->esq = dir;
         }
         else{
-            dir->pai->direita = dir;
+            dir->pai->dir = dir;
         }
     }
 
-    dir->fb = altura(dir->direita) - altura(dir->esquerda);
-    aux->fb = altura(aux->direita) - altura(aux->esquerda);
+    dir->fator_bal = altura(dir->dir) - altura(dir->esq);
+    aux->fator_bal = altura(aux->dir) - altura(aux->esq);
     return dir;
 }
-
-arvore_avl* balancear(arvore_avl *raiz, arvore_avl *aux){
-    if(aux->fb < -1){
-        if(aux->esquerda->fb > 0){
-            aux->esquerda = rot_esquerda(raiz, aux->esquerda);
+arvore_avl* balancear(arvore_avl* raiz, arvore_avl *aux){
+    if(aux->fator_bal < -1){
+        if(aux->esq->fator_bal > 0){
+            aux->esq = rot_esq(raiz, aux->esq);
         }
 
-        aux = rot_direita(raiz, aux);
+        aux = rot_dir(raiz, aux);
     }
 
-    else if(aux->fb > 1){
-        if(aux->direita->fb < 0){
-            aux->direita = rot_direita(raiz, aux->direita);
+    else if(aux->fator_bal > 1){
+        if(aux->dir->fator_bal < 0){
+            aux->dir = rot_dir(raiz, aux->dir);
         }
 
-        aux = rot_esquerda(raiz, aux);
+        aux = rot_esq(raiz, aux);
     }
 
     return aux;
-}
-
-int altura(arvore_avl* aux){
-    if(!aux){
-        return 0;
-    }
-
-    int alturaEsquerda = altura(aux->esquerda);
-    int alturaDireita = altura(aux->direita);
-
-    return (alturaEsquerda > alturaDireita) ? alturaEsquerda+ 1: alturaDireita + 1;
 }
