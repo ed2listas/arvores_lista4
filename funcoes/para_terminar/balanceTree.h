@@ -67,8 +67,8 @@ tree *balanceTree(tree *arvore) {
  }*/
 
 
-struct arvore_avl* rot_direita(struct arvore_avl *aux){
-    struct arvore_avl *esq = aux->esquerda;
+arvore_avl* rot_direita(arvore_avl *raiz, arvore_avl *aux){
+    arvore_avl *esq = aux->esquerda;
 
     aux->esquerda = esq->direita;
     esq->direita = aux;
@@ -99,8 +99,8 @@ struct arvore_avl* rot_direita(struct arvore_avl *aux){
     return esq;
 }
 
-struct arvore_avl* rot_esquerda(struct arvore_avl *aux){
-    struct arvore_avl *dir = aux->direita;
+arvore_avl* rot_esquerda(arvore_avl *raiz, arvore_avl *aux){
+    arvore_avl *dir = aux->direita;
 
     aux->direita = dir->esquerda;
     dir->esquerda = aux;
@@ -130,23 +130,33 @@ struct arvore_avl* rot_esquerda(struct arvore_avl *aux){
     return dir;
 }
 
-//Balanceando a árvore
-struct arvore_avl* balanceia(struct arvore_avl *aux){
+arvore_avl* balancear(arvore_avl *raiz, arvore_avl *aux){
     if(aux->fb < -1){
         if(aux->esquerda->fb > 0){
-            aux->esquerda = rot_esquerda(aux->esquerda);
+            aux->esquerda = rot_esquerda(raiz, aux->esquerda);
         }
 
-        aux = rot_direita(aux);
+        aux = rot_direita(raiz, aux);
     }
 
     else if(aux->fb > 1){
         if(aux->direita->fb < 0){
-            aux->direita = rot_direita(aux->direita);
+            aux->direita = rot_direita(raiz, aux->direita);
         }
 
-        aux = rot_esquerda(aux);
+        aux = rot_esquerda(raiz, aux);
     }
 
     return aux;
+}
+
+int altura(arvore_avl* aux){
+    if(!aux){
+        return 0;
+    }
+
+    int alturaEsquerda = altura(aux->esquerda);
+    int alturaDireita = altura(aux->direita);
+
+    return (alturaEsquerda > alturaDireita) ? alturaEsquerda+ 1: alturaDireita + 1;
 }

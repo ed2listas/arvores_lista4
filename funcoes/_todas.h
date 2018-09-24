@@ -20,4 +20,4 @@
 #include "oper_com_arvores/contaElementos.h"
 #include "oper_com_arvores/removeValue.h"
 #include "oper_com_arvores/verificaBalanceada.h"
-//#include "balanceTree.h"
+#include "para_terminar/balanceTree.h"

@@ -1,4 +1,4 @@
-//Alunos: xxxxxxxxxxxxxxxxxxxx                          xx/xxxxxxx
+//Alunos: Joberth Rogers Tavares Costa                  16/0128013
 //        Marcelo Araujo dos Santos                     16/0035481
 
 #include <stdio.h>
@@ -27,6 +27,13 @@ typedef struct TREE {
   struct TREE *left;
   struct TREE *right;
 }tree;
+
+typedef struct arvore{
+    int valor, fb;  /* fb =  hDireita - hEsquerda */
+    struct arvore *esquerda;
+    struct arvore *direita;
+    struct arvore *pai;
+}arvore_avl;
 
 #include "funcoes/_todas.h"
 
