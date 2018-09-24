@@ -1,5 +1,6 @@
 
-tree * removeValue(tree * arvore, int valor, int tipoDeArvore) {
+tree * removeValue(tree * arvore, int valor) {
+
   tree *aux = arvore;
   tree *ant;
   tree *folha,*antFolha;
@@ -9,6 +10,12 @@ tree * removeValue(tree * arvore, int valor, int tipoDeArvore) {
     printf("arvore esta vazia!\n");
     pausar();
     return arvore;
+  }
+  if (arvore->left == NULL) {
+    if (arvore->right == NULL) {
+      free(arvore);
+      return NULL;
+    }
   }
   // primeiro procuramos o valor
   while(aux->value != valor){
@@ -59,7 +66,7 @@ tree * removeValue(tree * arvore, int valor, int tipoDeArvore) {
       folha = folha->left;
     }
     temp = folha->value;
-    arvore = removeValue(arvore, folha->value, tipoDeArvore);
+    arvore = removeValue(arvore, folha->value);
     aux->value = temp;
   }
   return arvore;

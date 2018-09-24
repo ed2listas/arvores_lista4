@@ -5,7 +5,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
-#include <unistd.h>
 
 #define PRETO 0
 #define VERMELHO 1
@@ -15,26 +14,21 @@
 
 #define clear() printf("\033[H\033[J")
 #define gotoxy(x,y) printf("\033[%d;%dH", (y), (x))
-#define moveUp() printf("\033[XA")
+/*#define moveUp() printf("\033[XA")
 #define moveDown() printf("\033[XB")
 #define moveRight() printf("\033[XC")
 #define moveLeft() printf("\033[XD")
-//printf("\033[2J"); // Clear screen
+printf("\033[2J"); // Clear screen*/
 
 typedef struct TREE {
   int value;
-  int color; // só usado se for arvore VP
+  int color;
+  int fator_bal;
+  struct TREE *father;
   struct TREE *left;
   struct TREE *right;
 }tree;
 
-typedef struct arvore{
-    int valor;
-    int fator_bal;
-    struct arvore *pai;
-    struct arvore *esq;
-    struct arvore *dir;
-}arvore_avl;
 
 #include "funcoes/_todas.h"
 
@@ -42,12 +36,13 @@ int main() {
   char lixo;
   char caminho[] = "arquivo/arvorex.txt";
   int opcao,valor;
-  int tipo; // tipo vermelho preto
+  int tipo = TIPO_AVL;
   tree *arvore = NULL;
   tree *aux;
-  //limparTela();
+  limparTela();
+
   // carrega arvore
-  arvore = lerArvoreDoArquivo(arvore, caminho, &tipo);
+  //arvore = lerArvoreDoArquivo(arvore, caminho, &tipo);
 
   do {
     // mostra arvore
@@ -64,8 +59,7 @@ int main() {
       case 2: // remover valor
         leValor(&valor);
         limparTela();
-        arvore = removeValue(arvore, valor, tipo);
-        // apos remover, fazer balanceamento e outras coisas
+        arvore = removeValue(arvore, valor);
         break;
       case 3: // carregar arvore
         arvore = freeArvore(arvore);
