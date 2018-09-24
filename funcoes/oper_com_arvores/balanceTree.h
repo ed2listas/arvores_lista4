@@ -13,20 +13,19 @@ tree* rot_right(tree* raiz, tree *no){
 
 
   no->father = temp;
-  if (no == NULL) {
+  /*if (no == NULL) {
     printf("NO nulo\n");
   } else {
     printf("NO nao nulo, no eh %d\n",no->value);
   }
   printf("peso esq: %d,  peso dir: %d\n",getHeight(no->left), getHeight(no->right));
-
+  */
   //printf("valor: %d, esq e dir = %d, %d\n", no->value, no->left->value, no->right->value);
   //printf("valor esq: %d\n", no->left->value);
   no->fator_bal = getHeight(no->left) - getHeight(no->right);
-
-  printf("chegou no meio ********\n");
+  //printf("chegou no meio ********\n");
   temp->fator_bal = getHeight(temp->left) - getHeight(temp->right);
-  printf("chegou aqui tambem ********\n");
+  //printf("chegou aqui tambem ********\n");
   return temp;
 }
 
@@ -54,18 +53,15 @@ tree* balancear(tree* raiz, tree *aux){
   tree * bug;
    if(aux->fator_bal > 1){
      if(esq->fator_bal < 0){
+        //aux->left = rot_left(raiz, aux->left);
 
-        aux->left = rot_left(raiz, aux->left);
-        bug = aux->left->left;
+        /*bug = aux->left->left;
         printf("veja: %d\n", aux->left->father->value);
         printf("bug: %d ***\n", bug->value);
         printf("pai: %d ***\n", bug->father->value);
-        printf("avo: %d ***\n", bug->father->father->value);
-
+        printf("avo: %d ***\n", bug->father->father->value);*/
      }
-
      aux = rot_right(raiz, aux);
-
    }
    else if(aux->fator_bal < -1){
        if(aux->right->fator_bal > 0){

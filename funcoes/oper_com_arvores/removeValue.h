@@ -11,6 +11,12 @@ tree * removeValue(tree * arvore, int valor) {
     pausar();
     return arvore;
   }
+  if (arvore->left == NULL) {
+    if (arvore->right == NULL) {
+      free(arvore);
+      return NULL;
+    }
+  }
   // primeiro procuramos o valor
   while(aux->value != valor){
     ant = aux;

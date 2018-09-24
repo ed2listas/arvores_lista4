@@ -18,13 +18,15 @@ void printaValor(int valor, int cor, int tipo, int fator) {
     style(RESETALL);
   }
   else
-    printf("%d (%d)",valor,fator);
+    //printf("%d (%d)",valor,fator);
+    printf("%d",valor);
 }
 
 void printaRecursivo(tree *no, int tipo, int sizeLine, int posX, int posY) {
   int pos = posX / 2, i;
   char pausa;
   gotoxy(posX, posY);
+  debug("linha", sizeLine, posX, posY);
   printaValor(no->value, no->color, tipo, no->fator_bal);
   //debug("tamanho linha", sizeLine, posX, posY);
   //debug("posX", posX, posX, posY);
@@ -55,7 +57,7 @@ void mostraArvore(tree *arvore, int tipo) {
   printf(" ========================================\n");
   if (arvore != NULL){
     printaRecursivo(arvore, tipo, posX/2, posX, posY);
-    gotoxy(1,posX+h+5);
+    gotoxy(1,posX+h+8);
   } else {
     printf("Sem arvore carregada\n");
   }

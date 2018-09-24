@@ -17,12 +17,12 @@ int getHeight(tree* aux){
     if(!aux){
         return 0;
     }
-    printf("[%d] valor q chegou: %d\n",++ciclos, aux->value);
-    if (ciclos == 50) {
+    //printf("[%d] valor q chegou: %d\n",++ciclos, aux->value);
+    /*if (ciclos == 50) {
       exit(1);
-    }
+    }*/
     int alturaesq = getHeight(aux->left);
-    //int alturadir = getHeight(aux->right);
+    int alturadir = getHeight(aux->right);
 
-    return (alturaesq > 0) ? alturaesq+ 1: 0 + 1;
+    return (alturaesq > alturadir) ? alturaesq+ 1: alturadir + 1;
 }
