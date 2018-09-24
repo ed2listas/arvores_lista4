@@ -66,10 +66,11 @@ tree * removeValue(tree * arvore, int valor, int tipoDeArvore) {
 }
 
 arvore_avl* men_dir(arvore_avl *arvore){
-    while(arvore->esq){
-        arvore = arvore->esq;
+    arvore_avl* aux = arvore;
+    while(aux->dir != NULL){
+        printf("aux\n");
     }
-    return arvore;
+    return aux;
 }
 
 void remover_avl(arvore_avl *raiz, arvore_avl *aux){
@@ -105,7 +106,7 @@ void remover_avl(arvore_avl *raiz, arvore_avl *aux){
             free(aux);
         }
         else{
-            aux2 = men_dir(aux->dir);
+            aux2 = men_dir(aux->esq);
             aux->valor = aux2->valor;
 
             remover_avl(raiz, aux2);
@@ -148,16 +149,15 @@ void remover_avl(arvore_avl *raiz, arvore_avl *aux){
 
 void remove_chamada(arvore_avl *raiz, int valor){
     arvore_avl *aux;
-    arvore_avl *aux2;
 
-    aux2 = raiz;
+    aux = raiz;
 
-    while(aux2 && aux2->valor != valor){
+    while(aux && aux->valor != valor){
         if(valor < aux->valor){
-            aux2 = aux2->esq;
+            aux = aux->esq;
         }
         else{
-            aux2 = aux2->dir;
+            aux = aux->dir;
         }
     }
 
