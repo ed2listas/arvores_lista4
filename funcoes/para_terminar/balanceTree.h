@@ -1,4 +1,4 @@
-tree *rodaDir(tree *arvore,tree *pai,tree *arvoreReal) {
+/*tree *rodaDir(tree *arvore,tree *pai,tree *arvoreReal) {
   tree *aux = arvore->right;
   if (pai != NULL) {
     if (pai->left == arvore)
@@ -64,4 +64,89 @@ tree *balanceTree(tree *arvore) {
      printf("arvore esta balanceada\n");
    }
    return arvore;
- }
+ }*/
+
+
+struct arvore_avl* rot_direita(struct arvore_avl *aux){
+    struct arvore_avl *esq = aux->esquerda;
+
+    aux->esquerda = esq->direita;
+    esq->direita = aux;
+
+    if(aux->esquerda){
+        aux->esquerda->pai = aux;
+    }
+
+    esq->pai = aux->pai;
+    aux->pai = esq;
+
+    if(aux == raiz){
+        raiz = esq;
+    }
+
+    if(esq->pai){
+        if(esq->valor < esq->pai->valor){
+            esq->pai->esquerda = esq;
+        }
+        else{
+            esq->pai->direita = esq;
+        }
+    }
+
+    esq->fb = altura(esq->direita) - altura(esq->esquerda);
+    aux->fb = altura(aux->direita) - altura(aux->esquerda);
+
+    return esq;
+}
+
+struct arvore_avl* rot_esquerda(struct arvore_avl *aux){
+    struct arvore_avl *dir = aux->direita;
+
+    aux->direita = dir->esquerda;
+    dir->esquerda = aux;
+
+    if(aux->direita){
+        aux->direita->pai = aux;
+    }
+
+    dir->pai = aux->pai;
+    aux->pai = dir;
+
+    if(aux == raiz){
+        raiz = dir;
+    }
+
+    if(dir->pai){
+        if(dir->valor < dir->pai->valor){
+            dir->pai->esquerda = dir;
+        }
+        else{
+            dir->pai->direita = dir;
+        }
+    }
+
+    dir->fb = altura(dir->direita) - altura(dir->esquerda);
+    aux->fb = altura(aux->direita) - altura(aux->esquerda);
+    return dir;
+}
+
+//Balanceando a árvore
+struct arvore_avl* balanceia(struct arvore_avl *aux){
+    if(aux->fb < -1){
+        if(aux->esquerda->fb > 0){
+            aux->esquerda = rot_esquerda(aux->esquerda);
+        }
+
+        aux = rot_direita(aux);
+    }
+
+    else if(aux->fb > 1){
+        if(aux->direita->fb < 0){
+            aux->direita = rot_direita(aux->direita);
+        }
+
+        aux = rot_esquerda(aux);
+    }
+
+    return aux;
+}
