@@ -8,7 +8,7 @@ void debug(char *msg, int a, int x, int y) {
   gotoxy(x, y);
 }
 
-void printaValor(int valor, int cor, int tipo) {
+void printaValor(int valor, int cor, int tipo, int fator) {
   if (tipo == TIPO_VP) {
     if (cor == VERMELHO)
       background(RED);
@@ -18,14 +18,14 @@ void printaValor(int valor, int cor, int tipo) {
     style(RESETALL);
   }
   else
-    printf("%d",valor);
+    printf("%d (%d)",valor,fator);
 }
 
 void printaRecursivo(tree *no, int tipo, int sizeLine, int posX, int posY) {
   int pos = posX / 2, i;
   char pausa;
   gotoxy(posX, posY);
-  printaValor(no->value, no->color, tipo);
+  printaValor(no->value, no->color, tipo, no->fator_bal);
   //debug("tamanho linha", sizeLine, posX, posY);
   //debug("posX", posX, posX, posY);
   //scanf("%c", &pausa);

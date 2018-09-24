@@ -1,110 +1,77 @@
-/*int getHeight(tree* aux){
-    if(!aux){
-        return 0;
-    }
 
-    int getHeightleft = getHeight(aux->left);
-    int getHeightright = getHeight(aux->right);
+tree* rot_right(tree* raiz, tree *no){
+  tree *temp = no->left;
+  no->left = temp->right; // no pega filho esq de temp
+  if (temp->right) {
+    temp->right->father = no;
+  }
 
-    return (getHeightleft > getHeightright) ? getHeightleft+ 1: getHeightright + 1;
-}*/
-
-// rot right
-
-tree* rot_right(tree* raiz, tree *aux){
-  tree *c = aux;
-  tree *pai = c->father;
-  tree *b = c->left;
+  temp->right = no;
+  temp->father = no->father;
+  if (no->father)
+    no->father->left = temp;
 
 
-  pai->left = b;
-  c->left = b->right;
-  b->right = c;
+  no->father = temp;
+  if (no == NULL) {
+    printf("NO nulo\n");
+  } else {
+    printf("NO nao nulo, no eh %d\n",no->value);
+  }
+  printf("peso esq: %d,  peso dir: %d\n",getHeight(no->left), getHeight(no->right));
 
-  b->father = pai;
-  c->father = b;
+  //printf("valor: %d, esq e dir = %d, %d\n", no->value, no->left->value, no->right->value);
+  //printf("valor esq: %d\n", no->left->value);
+  no->fator_bal = getHeight(no->left) - getHeight(no->right);
 
-  b->fator_bal = getHeight(aux->left) - getHeight(aux->right);
-  c->fator_bal = getHeight(aux->left) - getHeight(aux->right);
-
-  return b;
-  /*
-   tree *left = aux->left;
-
-   aux->left = left->right;
-   left->right = aux;
-
-   if(aux->left){
-       aux->left->father = aux;
-   }
-
-   left->father = aux->father;
-   aux->father = left;
-
-   if(aux == raiz){
-       raiz = left;
-   }
-
-   if(left->father){
-       if(left->value < left->father->value){
-           left->father->left = left;
-       }
-       else{
-           left->father->right = left;
-       }
-   }
-
-   left->fator_bal = getHeight(left->left) - getHeight(left->right);
-   aux->fator_bal = getHeight(aux->left) - getHeight(aux->right);
-
-   return left;*/
+  printf("chegou no meio ********\n");
+  temp->fator_bal = getHeight(temp->left) - getHeight(temp->right);
+  printf("chegou aqui tambem ********\n");
+  return temp;
 }
 
-tree* rot_left(tree* raiz,tree *aux){
-   tree *right = aux->right;
+tree* rot_left(tree* raiz, tree *no){
+  tree *temp = no->right;
+  no->right = temp->left; // no pega filho esq de temp
+  if (temp->left) {
+    temp->left->father = no;
+  }
+  temp->left = no;
+  temp->father = no->father;
+  if (no->father)
+    no->father->right = temp;
 
-   aux->right = right->left;
-   right->left = aux;
 
-   if(aux->right){
-       aux->right->father = aux;
-   }
+  no->father = temp;
+  no->fator_bal = getHeight(no->left) - getHeight(no->right);
+  temp->fator_bal = getHeight(temp->left) - getHeight(temp->right);
 
-   right->father = aux->father;
-   aux->father = right;
-
-   if(aux == raiz){
-       raiz = right;
-   }
-
-   if(right->father){
-       if(right->value < right->father->value){
-           right->father->left = right;
-       }
-       else{
-           right->father->right = right;
-       }
-   }
-
-   right->fator_bal = getHeight(right->left) - getHeight(right->right);
-   aux->fator_bal = getHeight(aux->left) - getHeight(aux->right);
-   return right;
+  return temp;
 }
+
 tree* balancear(tree* raiz, tree *aux){
-
+  tree* esq = aux->left;
+  tree * bug;
    if(aux->fator_bal > 1){
-       if(aux->left->fator_bal < 0){
-           aux->left = rot_left(raiz, aux->left);
-       }
+     if(esq->fator_bal < 0){
 
-       raiz = rot_right(raiz, aux);
+        aux->left = rot_left(raiz, aux->left);
+        bug = aux->left->left;
+        printf("veja: %d\n", aux->left->father->value);
+        printf("bug: %d ***\n", bug->value);
+        printf("pai: %d ***\n", bug->father->value);
+        printf("avo: %d ***\n", bug->father->father->value);
+
+     }
+
+     aux = rot_right(raiz, aux);
+
    }
-
-   else if(aux->fator_bal > 1){
-       if(aux->right->fator_bal < 0){
-           aux->right = rot_right(raiz, aux->right);
+   else if(aux->fator_bal < -1){
+       if(aux->right->fator_bal > 0){
+           //aux->right = rot_right(raiz, aux->right);
        }
-       raiz = rot_left(raiz, aux);
+       aux = rot_left(raiz, aux);
    }
 
    return raiz;

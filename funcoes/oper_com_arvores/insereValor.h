@@ -34,88 +34,63 @@ tree* insereVP(tree *arvore, int valor){
 //   ===============    avl ========================
 
 tree* insereAVL(tree *arvore, int valor){
-    tree *pai = NULL, *filho = NULL;
-    tree *aux = NULL;
-    int pausar;
-    // caso for nula
-    if(!arvore){
-        arvore = (tree*) malloc(sizeof(tree));
+  tree *pai = NULL, *novoNo = NULL, *aux = arvore;
+  int pausar;
 
-        if(!arvore){
-            printf("Nao foi possivel alocar\n");
-            return arvore;
-        }
-        arvore->value = valor;
-        arvore->left = NULL;
-        arvore->right = NULL;
-        arvore->father = NULL;
-        arvore->fator_bal = 0;
-        return arvore;
+  novoNo = (tree*) malloc(sizeof(tree));
+  novoNo->value = valor;
+  novoNo->left = NULL;
+  novoNo->right = NULL;
+  novoNo->father = NULL;
+  novoNo->fator_bal = 0;
+
+  if(!novoNo){
+    printf("Nao foi possivel alocar\n");
+    return arvore;
+  }
+
+  // caso raiz for nula
+  if(arvore == NULL){
+    return novoNo;
+  }
+
+  // caso raiz não for nula
+  aux = arvore;
+  pai = aux;
+  while(aux){
+    if(valor < aux->value){
+      pai = aux;
+      aux = aux->left;
+    } else {
+      pai = aux;
+      aux = aux->right;
     }
-    // caso raiz não for nula
-    pai = arvore;
-    filho = arvore;
+  }
+  novoNo->father = pai;
+  if (valor < pai->value) {
+    pai->left = novoNo;
+  } else {
+    pai->right = novoNo;
+  }
 
-    while(filho){
-      if(valor < filho->value){
-          filho = filho->left;
-          if(!filho){
-            pai->left = (tree*) malloc(sizeof(tree));
+  // balanceando seus ancestrais
+  aux = novoNo->father;
+  while(aux != NULL) {
+    aux->fator_bal = getHeight(aux->left) - getHeight(aux->right);
 
-            if(!pai->left){
-              printf("Erro ao alocar =(\n");
-              exit(1);
-            }
+    if(abs(aux->fator_bal) > 1){
+        //printf("esse cara ta desbal  %d [%d]\n", aux->value, aux->fator_bal);
+        aux = balancear(arvore,aux);
+        aux->fator_bal = getHeight(aux->left) - getHeight(aux->right);
 
-            filho = pai->left;
-
-            filho->left = NULL;
-            filho->right = NULL;
-            filho->father = pai;
-            filho->value = valor;
-            break;
-          }
-          else{
-              pai = filho;
-          }
-      }
-      else{ //Para outro lado
-        filho = filho->right;
-
-        if(!filho){
-          pai->right = (tree*) malloc(sizeof(tree));
-
-          if(!pai->right){
-              printf("Erro ao alocar =(\n");
-              exit(1);
-          }
-
-          filho = pai->right;
-
-          filho->left = NULL;
-          filho->right = NULL;
-          filho->father = pai;
-          filho->value = valor;
-          break;
-        }
-        else{
-            pai = filho;
-        }
-      }
     }
-
-    if(filho){
-        aux = filho;
-        while(aux){
-            aux->fator_bal = getHeight(aux->left) - getHeight(aux->right);
-
-            if(aux->fator_bal > 1 || aux->fator_bal < -1){
-                arvore = balancear(arvore,aux); // aux = ...
-            }
-            aux = aux->father;
-        }
-        return arvore;
+    if (aux->father == NULL) {
+      return aux;
     }
+    aux = aux->father;
+  }
+
+  return aux;
 }
 
 // **********************************
@@ -123,8 +98,7 @@ tree* insereAVL(tree *arvore, int valor){
 tree *insereValor(tree *arvore, int valor, int tipo) {
   if (tipo == TIPO_VP) {
     arvore = insereVP(arvore, valor);
-  }
-  else {
+  } else {
     arvore = insereAVL(arvore, valor);
   }
   return arvore;

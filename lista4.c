@@ -52,7 +52,8 @@ int main() {
   // carrega arvore
   //arvore = lerArvoreDoArquivo(arvore, caminho, &tipo);
   arvore = insereValor(arvore, 5, tipo);
-
+  arvore = insereValor(arvore, 3, tipo);
+  arvore = insereValor(arvore, 4, tipo);
   do {
     // mostra arvore
     mostraArvore(arvore, tipo);
